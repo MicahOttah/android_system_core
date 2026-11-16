@@ -12,7 +12,7 @@ X 8.0 (V521)** port to **LineageOS 15.1** (Android 8.1).
 
 | Commit | Subject |
 | --- | --- |
-| `5919882` | v521: never let the system overwrite the recovery partition |
+| `5e3b6fb` | v521: never let the system overwrite the recovery partition |
 
 The recovery partition of this device holds **TWRP**, which was flashed by
 hand, not the AOSP recovery that ships with the ROM.  The stock `init.rc`
