@@ -10,24 +10,26 @@ X 8.0 (V521)** port to **LineageOS 15.1** (Android 8.1).
 
 ## What is different on `lineage-15.1-v521`
 
+Nothing in the code any more; the branch is upstream plus this README.
+
 | Commit | Subject |
 | --- | --- |
 | `5e3b6fb` | v521: never let the system overwrite the recovery partition |
+| (revert) | v521: let the system update the recovery partition again |
 
-The recovery partition of this device holds **TWRP**, which was flashed by
-hand, not the AOSP recovery that ships with the ROM.  The stock `init.rc`
-starts `install-recovery.sh` when `persist.sys.recovery_update` is true,
-which would write the ROM's recovery image over the partition and destroy
-the TWRP installation.
-
-The trigger is commented out instead of being tied to a property, so that
-no build can turn it back on by accident:
+`5e3b6fb` commented out the `init.rc` trigger that starts
+`install-recovery.sh` when `persist.sys.recovery_update` is true, because the
+recovery partition held a hand-flashed TWRP at the time.  The device now runs
+the port's own Lineage recovery, which should follow the installed ROM (its
+menu prints the ROM version), so the trigger is back as upstream has it:
 
 ```
 # update recovery if enabled
-#on property:persist.sys.recovery_update=true
-#    start flash_recovery
+on property:persist.sys.recovery_update=true
+    start flash_recovery
 ```
+
+The device tree sets `persist.sys.recovery_update=true` by default.
 
 ## The port
 
